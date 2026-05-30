@@ -1,14 +1,20 @@
 import autogen
+import os
+from dotenv import load_dotenv
 
-# 1. Configuration
-# Purpose: Setup the LLM connection.
-# Improvement: Use 'filter_func' to switch models dynamically based on cost or complexity.
-config_list = [{"model": "gpt-4", "api_key": "YOUR_API_KEY"}]
+load_dotenv()
+
+# 1. Configuration for Groq
+# Purpose: Setup the connection to Groq's high-speed inference.
+config_list = [
+    {
+        "model": "llama3-70b-8192",
+        "api_key": os.getenv("GROQ_API_KEY"),
+        "base_url": "https://api.groq.com/openai/v1",
+    }
+]
 
 # 2. Define Agents
-# AssistantAgent: The LLM brain.
-# UserProxyAgent: Acts on behalf of the human, can execute code, and asks for help if stuck.
-# Improvement: Set 'human_input_mode' to "NEVER" for fully autonomous agents (use with caution).
 assistant = autogen.AssistantAgent(
     name="assistant",
     llm_config={"config_list": config_list},

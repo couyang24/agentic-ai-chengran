@@ -3,3 +3,4 @@ crewai-tools
 pyautogen
 langgraph
 python-dotenv
+langchain-groq

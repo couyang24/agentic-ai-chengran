@@ -1,13 +1,22 @@
 from crewai import Agent, Task, Crew, Process
 from crewai_tools import SerperDevTool
+from langchain_groq import ChatGroq
+import os
+from dotenv import load_dotenv
 
-# 0. Initialize Tools
-# Purpose: Giving agents the ability to interact with the internet.
-# Requirement: You need a SERPER_API_KEY in your .env file.
+load_dotenv()
+
+# 0. Initialize LLM & Tools
+# Using Groq for free/fast inference
+llm = ChatGroq(
+    temperature=0,
+    groq_api_key=os.getenv("GROQ_API_KEY"),
+    model_name="llama3-70b-8192"
+)
+
 search_tool = SerperDevTool()
 
 # 1. Define Agents
-# Purpose: Creating specific "personified" roles with unique goals and backstories.
 researcher = Agent(
   role='Senior Research Analyst',
   goal='Uncover cutting-edge developments in AI agents',
@@ -15,7 +24,8 @@ researcher = Agent(
   Your expertise lies in identifying emerging trends.""",
   verbose=True,
   allow_delegation=False,
-  tools=[search_tool]
+  tools=[search_tool],
+  llm=llm
 )
 
 writer = Agent(
@@ -24,7 +34,8 @@ writer = Agent(
   backstory="""You are a renowned content strategist known for 
   making complex topics simple.""",
   verbose=True,
-  allow_delegation=True
+  allow_delegation=True,
+  llm=llm
 )
 
 # 2. Define Tasks
