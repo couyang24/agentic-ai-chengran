@@ -1,15 +1,21 @@
 from crewai import Agent, Task, Crew, Process
+from crewai_tools import SerperDevTool
+
+# 0. Initialize Tools
+# Purpose: Giving agents the ability to interact with the internet.
+# Requirement: You need a SERPER_API_KEY in your .env file.
+search_tool = SerperDevTool()
 
 # 1. Define Agents
 # Purpose: Creating specific "personified" roles with unique goals and backstories.
-# Improvement: Add 'tools' to agents (e.g., Google Search, Database tool) so they can act on the world.
 researcher = Agent(
   role='Senior Research Analyst',
   goal='Uncover cutting-edge developments in AI agents',
   backstory="""You are an expert at a technology think tank.
   Your expertise lies in identifying emerging trends.""",
   verbose=True,
-  allow_delegation=False
+  allow_delegation=False,
+  tools=[search_tool]
 )
 
 writer = Agent(
