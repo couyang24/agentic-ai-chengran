@@ -8,7 +8,7 @@ load_dotenv()
 # Purpose: Setup the connection to Groq's high-speed inference.
 config_list = [
     {
-        "model": "llama3-70b-8192",
+        "model": "llama-3.3-70b-versatile",
         "api_key": os.getenv("GROQ_API_KEY"),
         "base_url": "https://api.groq.com/openai/v1",
     }
@@ -31,4 +31,4 @@ user_proxy = autogen.UserProxyAgent(
 # 3. Start Conversation
 # Purpose: Solve a problem through dialogue.
 # Improvement: Use 'GroupChat' to involve 3+ agents in a round-robin or AI-selected sequence.
-# user_proxy.initiate_chat(assistant, message="Write a python script to plot the stock price of NVDA.")
+user_proxy.initiate_chat(assistant, message="Write a python script to plot the stock price of NVDA.")

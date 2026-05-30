@@ -1,17 +1,19 @@
-from crewai import Agent, Task, Crew, Process
+from crewai import Agent, Task, Crew, Process, LLM
 from crewai_tools import SerperDevTool
-from langchain_groq import ChatGroq
+import crewai.llms.cache
 import os
 from dotenv import load_dotenv
+
+# Monkey-patch to fix Groq compatibility issue with cache_breakpoint
+crewai.llms.cache.mark_cache_breakpoint = lambda x: x
 
 load_dotenv()
 
 # 0. Initialize LLM & Tools
-# Using Groq for free/fast inference
-llm = ChatGroq(
-    temperature=0,
-    groq_api_key=os.getenv("GROQ_API_KEY"),
-    model_name="llama3-70b-8192"
+# Using CrewAI's native LLM class
+llm = LLM(
+    model="groq/llama-3.3-70b-versatile",
+    temperature=0
 )
 
 search_tool = SerperDevTool()
@@ -53,5 +55,5 @@ crew = Crew(
   process=Process.sequential
 )
 
-# result = crew.kickoff()
-# print(result)
+result = crew.kickoff()
+print(result)
