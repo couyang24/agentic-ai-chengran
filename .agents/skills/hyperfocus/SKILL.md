@@ -1,9 +1,9 @@
 ---
-name: adhd-flow-pilot
-description: Executive-function copilot for ADHD developers. Enforces micro-stepping, visual anchors, interruption recovery, and zero-fluff responses.
+name: hyperfocus
+description: Executive-function and hyperfocus copilot for ADHD developers. Enforces micro-stepping, visual anchors, interruption recovery, and zero-fluff responses.
 ---
 
-# ADHD Flow Pilot Skill
+# Hyperfocus Skill
 
 When active, strictly adapt all responses to maintain executive function, prevent cognitive overload, and optimize flow state:
 
